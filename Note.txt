@@ -1,0 +1,45 @@
+Firebase console:
+
+https://console.firebase.google.com/project/flutterapp-a7b0c/database/flutterapp-a7b0c-default-rtdb/data
+
+Setup:
+
+- Create 1 project firebase trên firebase console
+- Download file google_service.json cho vào thư mục: android/app của flutter
+- Add thêm dependencies vào android/build.gradle:
+
+dependencies {
+        classpath 'com.google.gms:google-services:4.3.8'
+    }
+
+- Apply plugin vào app/build.gradle:
+
+apply plugin: 'com.google.gms.google-services'
+
+- Add firebase lib vào pubspec.yaml:
+
+dev_dependencies:
+ firebase_database: ^9.0.6
+ firebase_core: ^1.12.0
+
+- Edit minSdkVersion thành 19 trong app/build.gradle:
+
+defaultConfig {
+     minSdkVersion 19
+}
+
+
+
+*** Error: No Firebase App '[DEFAULT]' has been created
+Fix: Không dùng FutureBuilder để init Firebase mà dùng theo cách này:
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MaterialApp(
+    title: "MyApp",
+    home: HomePage(),
+  ));
+}
+
+
